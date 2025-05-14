@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { MobileMenu } from "./MobileMenu"; // Make sure this is the correct path
 
 const TopBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div className="bg-gray-50 text-gray-800 rounded-2xl px-4 sm:px-6 py-6 shadow-sm">
-      {/* Top Row: Search & Profile */}
+    <div className="bg-gray-50 text-gray-800 rounded-2xl px-4 sm:px-6 py-6 shadow-sm relative">
+      {/* Top Row: Search, Menu Icon & Profile */}
       <div className="flex items-center justify-between gap-4 max-w-6xl mx-auto">
         {/* Search Bar */}
         <div className="w-full md:w-1/2">
@@ -18,8 +21,17 @@ const TopBar = () => {
           </div>
         </div>
 
+        {/* Menu Button (Visible on Mobile Only) */}
+        <button
+          className="md:hidden cursor-pointer text-gray-800 text-3xl"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+
         {/* Profile Section */}
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <img
             src="https://plus.unsplash.com/premium_photo-1668485966810-cbd0f685f58f?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="User"
@@ -44,6 +56,9 @@ const TopBar = () => {
           </p>
         </div>
       </div>
+
+      {/* Mobile Menu Component */}
+      <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );
 };
